@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>书法格子生成器</title>
+  
+  <script type="module" crossorigin src="./assets/index-e4eaabe3.js"></script>
+  <link rel="stylesheet" href="./assets/index-4ee477f4.css">
+</head>
+<body>
+<div class="settings">
+
+  <div class="controls">
+
+    <div class="language-switch">
+      <label>
+        <input type="radio" name="language" value="chinese" checked>
+        <span>中文米字格</span>
+      </label>
+      <label>
+        <input type="radio" name="language" value="english">
+        <span>英文四线格</span>
+      </label>
+    </div>
+    <div class="section">
+      <h3>纸张方向</h3>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="orientation" value="portrait" checked>
+          纵向
+        </label>
+        <label>
+          <input type="radio" name="orientation" value="landscape">
+          横向
+        </label>
+      </div>
+      <div class="control-group">
+        <label>边距(mm)</label>
+        <div class="range-container">
+          <input type="range" id="margin" min="10" max="50" value="20" step="5">
+          <span class="range-value" id="marginValue">20</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>行间距(mm)</label>
+        <div class="range-container">
+          <input type="range" id="rowGap" min="0" max="20" value="5" step="0.5">
+          <span class="range-value" id="rowGapValue">5</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="chineseSettings">
+      <div class="control-group">
+        <label>列数调节</label>
+        <div class="range-container">
+          <input type="range" id="cols" min="4" max="20" value="12" step="1">
+          <span class="range-value" id="colsValue">12</span>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>格子样式</h3>
+        <div class="radio-group grid-style">
+          <label>
+            <input type="radio" name="gridStyle" value="border">
+            <span>仅边框</span>
+          </label>
+          <label>
+            <input type="radio" name="gridStyle" value="empty">
+            <span>空格子</span>
+          </label>
+          <label>
+            <input type="radio" name="gridStyle" value="cross">
+            <span>田字格</span>
+          </label>
+          <label>
+            <input type="radio" name="gridStyle" value="full" checked>
+            <span>米字格</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>拼音行设置</h3>
+        <div class="line-style-controls">
+          <div class="line-style-item">
+            <input type="checkbox" id="showPinyinLines">
+            <label for="showPinyinLines">显示拼音行</label>
+          </div>
+          <div class="line-style-item">
+            <input type="checkbox" id="pinyinVerticalLines">
+            <label for="pinyinVerticalLines">显示竖线分隔</label>
+          </div>
+          <div class="line-style-item">
+            <input type="checkbox" id="pinyinMiddleDashed" checked>
+            <label for="pinyinMiddleDashed">中间两行虚线</label>
+          </div>
+        </div>
+        <div class="control-group" style="margin-top: 12px;">
+          <label>拼音行高度比例</label>
+          <div class="range-container">
+            <input type="range" id="pinyinHeight" min="4" max="8" value="6" step="1">
+            <span class="range-value" id="pinyinHeightValue">0.75</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>颜色设置</h3>
+        <div class="color-picker">
+          <label>
+            格子边框
+            <input type="color" id="borderColor" value="#fb1818">
+          </label>
+          <label>
+            辅助线
+            <input type="color" id="innerColor" value="#ffd9d9">
+          </label>
+          <label>
+            拼音行线条
+            <input type="color" id="pinyinColor" value="#fb1818">
+          </label>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>线条样式</h3>
+        <div class="line-style-controls">
+          <div class="line-style-item">
+            <input type="checkbox" id="horizontalDashed" checked>
+            <label for="horizontalDashed">横线虚线</label>
+          </div>
+          <div class="line-style-item">
+            <input type="checkbox" id="verticalDashed" checked>
+            <label for="verticalDashed">竖线虚线</label>
+          </div>
+          <div class="line-style-item">
+            <input type="checkbox" id="diagonal1Dashed" checked>
+            <label for="diagonal1Dashed">左斜线虚线</label>
+          </div>
+          <div class="line-style-item">
+            <input type="checkbox" id="diagonal2Dashed" checked>
+            <label for="diagonal2Dashed">右斜线虚线</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="englishSettings">
+      <div class="control-group">
+        <label>每行高度(mm)</label>
+        <div class="range-container">
+          <input type="range" id="lineHeight" min="6" max="20" value="8" step="0.5">
+          <span class="range-value" id="lineHeightValue">8</span>
+        </div>
+      </div>
+      <div class="section">
+        <h3>线条样式</h3>
+        <div class="line-style-controls">
+          <div class="line-style-item">
+            <input type="checkbox" id="line1Dashed">
+            <label for="line1Dashed">第一条线虚线</label>
+          </div>
+          <div class="line-style-item">
+            <input type="checkbox" id="line2Dashed">
+            <label for="line2Dashed">第二条线虚线</label>
+          </div>
+          <div class="line-style-item">
+            <input type="checkbox" id="line3Dashed">
+            <label for="line3Dashed">第三条线虚线</label>
+          </div>
+          <div class="line-style-item">
+            <input type="checkbox" id="line4Dashed">
+            <label for="line4Dashed">第四条线虚线</label>
+          </div>
+          <div class="line-style-item">
+            <input type="checkbox" id="line3Bold" checked>
+            <label for="line3Bold">第三条线加粗</label>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h3>颜色设置</h3>
+        <div class="color-picker">
+          <label>
+            线条颜色
+            <input type="color" id="lineColor" value="#ffb3b3">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="section font">
+      <h3>文字设置</h3>
+      <div id="chineseTextSettings">
+        <div class="control-group">
+          <label>素材选择</label>
+          <select id="chineseTextSelect" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+          </select>
+          <div class="toggle-container">
+            <div class="toggle-group">
+              <input type="checkbox" id="chineseAppendToggle" class="toggle-input">
+              <label for="chineseAppendToggle" class="toggle-label">
+                <span class="toggle-text left">覆盖</span>
+                <span class="toggle-text right">追加</span>
+              </label>
+            </div>
+            <div class="toggle-group">
+              <input type="checkbox" id="chineseTranslateToggle" class="toggle-input">
+              <label for="chineseTranslateToggle" class="toggle-label">
+                <span class="toggle-text left">原文</span>
+                <span class="toggle-text right">译文</span>
+              </label>
+            </div>
+            <!--<div class="toggle-group">
+              <input type="checkbox" id="chinesePunctuationToggle" class="toggle-input">
+              <label for="chinesePunctuationToggle" class="toggle-label">
+                <span class="toggle-text left">有标点</span>
+                <span class="toggle-text right">去标点</span>
+              </label>
+            </div>-->
+            <button id="chineseTextResSelectButton" class="add-text-button">添加</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label>输入文字</label>
+          <textarea id="chineseTextInput" rows="10"></textarea>
+        </div>
+        <div class="control-group">
+          <label>字体选择</label>
+          <div id="chineseFontSelectContainer"></div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="file" id="chineseFontUpload" accept=".ttf,.otf" style="display: none;">
+            <button id="chineseFontUploadButton" style="padding: 8px; flex: 1;">
+              上传字体文件 (.ttf/.otf)
+            </button>
+            <span id="chineseFontInfo" style="font-size: 0.9em; color: #666;"></span>
+          </div>
+        </div>
+      </div>
+
+      <div id="englishTextSettings" style="display: none;">
+        <div class="control-group">
+          <label>素材选择</label>
+          <select id="englishTextSelect" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+          </select>
+          <div class="toggle-container">
+            <div class="toggle-group">
+              <input type="checkbox" id="englishAppendToggle" class="toggle-input">
+              <label for="englishAppendToggle" class="toggle-label">
+                <span class="toggle-text left">覆盖</span>
+                <span class="toggle-text right">追加</span>
+              </label>
+            </div>
+            <button id="englishTextResSelectButton" class="add-text-button">添加</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label>输入文字</label>
+          <textarea id="englishTextInput" rows="10"></textarea>
+        </div>
+        <div class="control-group">
+          <label>字体选择</label>
+          <div id="englishFontSelectContainer"></div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="file" id="englishFontUpload" accept=".ttf,.otf" style="display: none;">
+            <button id="englishFontUploadButton" style="padding: 8px; flex: 1;">上传字体文件</button>
+            <span id="englishFontInfo" style="font-size: 0.9em; color: #666;"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>字体大小比例</label>
+        <div class="range-container">
+          <input type="range" id="fontSizeRatio" min="30" max="90" value="70" step="5">
+          <span class="range-value" id="fontSizeRatioValue">70%</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>文字透明度</label>
+        <div class="range-container">
+          <input type="range" id="textOpacity" min="0" max="100" value="20" step="5">
+          <span class="range-value" id="textOpacityValue">100%</span>
+        </div>
+      </div>
+      <div class="setting-item">
+        <input type="checkbox" id="keepEmptyLines">
+        <label for="keepEmptyLines">临摹</label>
+      </div>
+      <div class="setting-item">
+        <input type="checkbox" id="punctuationToggle" checked>
+        <label for="punctuationToggle">去标点</label>
+      </div>
+      <button id="fillTextBtn" style="margin-top: 12px;">填入文字</button>
+    </div>
+
+    <div class="grid-info">
+      <span>当前行数：<span id="rowsInfo">--</span></span>
+      <span id="gridSizeInfo">格子大小：--</span>
+      <span>总页数：<span id="totalPagesInfo">--</span></span>
+    </div>
+    <button id="exportPdfBtn">导出PDF</button>
+  </div>
+  <div>
+    <p> 纸张样例：</p>
+    <canvas id="gridCanvas"></canvas>
+  </div>
+</div>
+
+
+</body>
+</html>
